@@ -185,3 +185,50 @@ void HeapSort(int* a, int n) {
 	}
 }
 ```
+
+### 归并排序
+归并的特点  稳定+并非原地排序 需要on的空间复杂度  辅助空间暂存结果
+首先分拆然后进行合并
+
+简单思路为 合并两个有序数组 + 动用额外的空间
+
+sort函数进行不断的拆分
+
+```cpp
+void mergearray(int a[],int first,int mid,int last,int temp[])	//将两个有序数组合并排序 
+{
+	int i=first,j=mid+1;
+	int m=mid,n=last;
+	int k=0;
+	while(i<=m&&j<=n)
+	{
+		if(a[i]<a[j])
+			temp[k++]=a[i++];
+		else
+			temp[k++]=a[j++];
+	}
+	while(i<=m)
+		temp[k++]=a[i++];
+	while(j<=n)
+		temp[k++]=a[j++];
+	for(i=0;i<k;i++)
+		a[first+i]=temp[i];
+}
+ 
+void mergesort(int a[],int first,int last,int temp[])	//将两个任意数组合并排序 
+{
+	if(first<last)
+	{
+		int mid=(first+last)/2;
+		mergesort(a,first,mid,temp);	//左边有序 
+		mergesort(a,mid+1,last,temp);	//右边有序 
+		mergearray(a,first,mid,last,temp);	//再将两个有序数组合并 
+	}
+}
+```
+
+### 快速排序
+快排的思想其实也是分治的思想 找出基准，以基准为单位进行拆分继续继续进行排序
+
+快排的三种方法
+左右指针 快慢指针 挖坑法
